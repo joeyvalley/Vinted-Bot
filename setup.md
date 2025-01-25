@@ -15,6 +15,13 @@ https://github.com/teddy-vltn/vinted-discord-bot
 
 
 
+# LAST PROMPT TO CHAT-GPT
+We want to start moving forward with the project with the following tech stack: Node.js for backend, Redis for database, Vinted API for data scraping, and Vercel for hosting. We also will be using Docker as mentioned above.
+
+# NEXT PROMPT
+I have my app.js file running with my Telegram token and Redis is running on my machine. What should the next steps be?
+
+
 ## todos
 
 webshare proxies implementation via API key
