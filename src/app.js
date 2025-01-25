@@ -37,3 +37,6 @@ async function fetchVintedItems() {
 
 // Polling Vinted API every minute
 setInterval(fetchVintedItems, 60000);
+
+// wazzup
+
