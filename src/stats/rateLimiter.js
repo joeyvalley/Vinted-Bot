@@ -1,6 +1,6 @@
 import redis from 'redis';
 import { REDIS_HOST, REDIS_PORT } from '../config/env.js';
-import logger from '../utils/logger.js';
+import { logger } from '../utils/logger.js';
 
 const client = redis.createClient({ 
   host: REDIS_HOST,
@@ -81,7 +81,7 @@ export async function checkRateLimit(userId, type) {
  * @param {string} userId - User ID
  * @param {string} type - Rate limit type
  */
-async function trackViolation(userId, type) {
+export async function trackViolation(userId, type) {
   try {
     const violationKey = `rate_limit:${userId}:violations`;
     const banKey = `rate_limit:${userId}:ban`;

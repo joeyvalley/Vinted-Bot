@@ -1,6 +1,6 @@
 import redis from 'redis';
 import { REDIS_HOST, REDIS_PORT } from '../config/env.js';
-import logger from '../utils/logger.js';
+import { logger } from '../utils/logger.js';
 import { checkRateLimit, trackViolation } from './rateLimiter.js';
 
 const client = redis.createClient({ 
@@ -19,6 +19,8 @@ client.on('error', (err) => {
  * @param {string} eventType - Type of activity (e.g., 'search', 'notification')
  * @param {object} metadata - Additional event data
  */
+export { checkRateLimit };
+
 export async function recordActivity(activityData) {
   try {
     const { userId, eventType, timestamp, ...metadata } = activityData;

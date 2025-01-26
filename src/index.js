@@ -1,13 +1,13 @@
-const { fetchVintedItems } = require('./scraper/scraper');
-const { sendNotification } = require('./notifications/telegram');
-const { setCache, getCache } = require('./cache/redis');
-const { trackEvent, checkRateLimit } = require('./stats/statsTracker');
-const logger = require('./utils/logger');
-const errorHandler = require('./utils/errorHandler');
+import { fetchVintedItems } from './scraper/scraper.js';
+import { sendNotification } from './notifications/telegram.js';
+import { setCache, getCache } from './cache/redis.js';
+import { trackEvent, checkRateLimit } from './stats/statsTracker.js';
+import logger from './utils/logger.js';
+import errorHandler from './utils/errorHandler.js';
 
 // Create logs directory if it doesn't exist
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 const logsDir = path.join(__dirname, '../logs');
 if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir);

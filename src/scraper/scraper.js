@@ -1,19 +1,21 @@
-const axios = require('axios');
-const { PROXY_URL, VINTED_API_KEY } = require('../config/env');
-const logger = require('../utils/logger.js');
-const { RateLimiter } = require('limiter');
+import axios from 'axios';
+import { PROXY_URL } from '../config/env.js';
+import { logger } from '../utils/logger.js';
+import { RateLimiter } from 'limiter';
 
-// Create rate limiter (40 requests per minute)
+// Create more conservative rate limiter (20 requests per minute)
 const limiter = new RateLimiter({
-  tokensPerInterval: 40,
+  tokensPerInterval: 20,
   interval: 'minute'
 });
 
-// Default headers for Vinted API
+// Headers to mimic browser request
 const DEFAULT_HEADERS = {
-  'User-Agent': 'VintedBot/1.0',
-  'Accept': 'application/json',
-  'Authorization': `Bearer ${VINTED_API_KEY}`
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+  'Accept': 'application/json, text/plain, */*',
+  'Accept-Language': 'en-US,en;q=0.9',
+  'Referer': 'https://www.vinted.fr/',
+  'Origin': 'https://www.vinted.fr'
 };
 
 // Proxy configuration if available
@@ -77,4 +79,4 @@ async function fetchVintedItems(filters, page = 1, perPage = 100) {
   }
 }
 
-module.exports = { fetchVintedItems };
+export { fetchVintedItems };
