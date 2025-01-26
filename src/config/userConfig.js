@@ -1,13 +1,25 @@
 // User Configuration Module
-import { setCache, getCache } from '../cache/redis.js';
+import { setCache, getCache, deleteCache } from '../cache/redis.js';
 import { logger } from '../utils/logger.js';
 import Ajv from 'ajv';
 import { userConfigSchema } from './userConfigSchema.js';
 
-const ajv = new Ajv();
+const ajv = new Ajv({
+  strict: false,
+  strictSchema: false,
+  strictTypes: false
+});
 const validate = ajv.compile(userConfigSchema);
 
 export default class UserConfig {
+    defaultConfig = {
+        searchParams: {},
+        notificationPreferences: {
+            frequency: 'daily',
+            maxPrice: 100
+        }
+    };
+
     static validateConfig(config) {
         const valid = validate(config);
         if (!valid) {
@@ -37,7 +49,7 @@ export default class UserConfig {
     async getConfig() {
         try {
             const config = await getCache(this.configKey);
-            return config ? JSON.parse(config) : null;
+            return config ? JSON.parse(config) : this.defaultConfig;
         } catch (error) {
             logger.error(`Failed to get config for user ${this.userId}: ${error.message}`);
             throw error;
@@ -59,7 +71,7 @@ export default class UserConfig {
 
     async deleteConfig() {
         try {
-            await setCache(this.configKey, null);
+            await deleteCache(this.configKey);
             logger.info(`Deleted config for user ${this.userId}`);
             return true;
         } catch (error) {

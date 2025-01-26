@@ -1,5 +1,5 @@
 import { getCache, setCache } from '../cache/redis.js';
-import logger from '../utils/logger.js';
+import { logger } from '../utils/logger.js';
 import { fetchVintedItems } from '../scraper/scraper.js';
 import { trackEvent } from '../stats/statsTracker.js';
 

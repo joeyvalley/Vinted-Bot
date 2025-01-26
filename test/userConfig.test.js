@@ -1,23 +1,24 @@
 import { describe, it, beforeEach, afterEach } from 'mocha';
 import { expect } from 'chai';
-import redis from 'redis-mock';
 import sinon from 'sinon';
 import UserConfig from '../src/config/userConfig.js';
 import { logger } from '../src/utils/logger.js';
+import { connect } from '../src/cache/redis.js';
 
 describe('User Configuration System', () => {
     let userConfig;
-    let redisClient;
     let loggerStub;
 
+    before(async () => {
+        await connect();
+    });
+
     beforeEach(() => {
-        redisClient = redis.createClient();
-        userConfig = new UserConfig('test-user', redisClient);
+        userConfig = new UserConfig('test-user');
         loggerStub = sinon.stub(logger, 'error');
     });
 
     afterEach(() => {
-        redisClient.flushall();
         loggerStub.restore();
     });
 
@@ -71,7 +72,10 @@ describe('User Configuration System', () => {
         });
 
         it('should handle Redis errors', async () => {
-            sinon.stub(redisClient, 'set').throws(new Error('Redis error'));
+            const originalSet = userConfig.redisClient.set;
+            userConfig.redisClient.set = () => {
+                throw new Error('Redis error');
+            };
             
             try {
                 await userConfig.setConfig({});
@@ -79,6 +83,8 @@ describe('User Configuration System', () => {
             } catch (error) {
                 expect(error.message).to.include('Redis error');
                 expect(loggerStub.called).to.be.true;
+            } finally {
+                userConfig.redisClient.set = originalSet;
             }
         });
     });
