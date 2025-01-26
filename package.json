@@ -1,15 +1,35 @@
 {
   "name": "vinted-bot",
   "version": "1.0.0",
+  "description": "Vinted monitoring bot",
+  "main": "src/index.js",
   "type": "module",
-  "main": "app.js",
   "scripts": {
-    "start": "node src/app.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "mocha test/**/*.test.js"
   },
+  "keywords": [
+    "vinted",
+    "telegram",
+    "bot"
+  ],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.4.7",
-    "ioredis": "^5.3.1",
-    "node-fetch": "^3.3.0",
-    "node-telegram-bot-api": "^0.61.0"
+    "ajv": "^8.17.1",
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1",
+    "limiter": "^1.1.5",
+    "node-telegram-bot-api": "^0.61.0",
+    "redis": "^4.6.10"
+  },
+  "devDependencies": {
+    "chai": "^4.3.8",
+    "eslint": "^8.55.0",
+    "mocha": "^10.2.0",
+    "nodemon": "^3.0.2",
+    "redis-mock": "^0.56.3",
+    "sinon": "^17.0.1"
   }
 }
