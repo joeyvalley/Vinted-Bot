@@ -7,11 +7,14 @@
     "start": "node src/app.js"
   },
   "dependencies": {
+    "csv": "^6.3.11",
+    "csv-parser": "^3.1.0",
     "dotenv": "^16.4.7",
     "fs": "^0.0.1-security",
     "ioredis": "^5.3.1",
     "node-fetch": "^3.3.0",
     "node-telegram-bot-api": "^0.61.0",
+    "path": "^0.12.7",
     "puppeteer": "^24.1.1"
   }
 }
